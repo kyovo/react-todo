@@ -1,5 +1,5 @@
 {
-  "name": "boilerplate",
+  "name": "react-todo",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -38,5 +38,6 @@
     "script-loader": "^0.7.0",
     "style-loader": "^0.13.1",
     "webpack": "^1.14.0"
-  }
+  },
+  "author": "kyovo Digaw <kyovodigaw@gmail.com>"
 }
