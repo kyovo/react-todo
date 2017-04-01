@@ -3,9 +3,17 @@ var expect = require('expect');
 var TodoAPI = require('TodoAPI');
 
 var todos = [{
-  id: 23,
-  test: 'test all files',
+  id: 1,
+  text: 'test all files',
+  completed: true
+}, {
+  id: 2,
+  text: 'this second todo',
   completed: false
+}, {
+  id: 3,
+  text: 'this is the third todo',
+  completed: true
 }];
 
 describe('TodoAPI', function() {
@@ -47,6 +55,33 @@ describe('TodoAPI', function() {
       var actualTodos = TodoAPI.getTodos();
 
       expect(actualTodos).toEqual(todos);
+    });
+  });
+
+  describe('filterTodos', function() {
+    it('should return all items if show completed is true', function() {
+      var filteredTodos = TodoAPI.filterTodos(todos, true, '');
+      expect(filteredTodos.length).toBe(3);
+    });
+
+    it('should return only the no completed todos', function() {
+      var filterTodos = TodoAPI.filterTodos(todos, false, '');
+      expect(filterTodos.length).toBe(1);
+    });
+
+    it('should sort by completed status', function() {
+      var filteredTodos = TodoAPI.filterTodos(todos, true, '');
+      expect(filteredTodos[0].completed).toBe(false);
+    });
+
+    it('should filter todos by searchText', function() {
+      var filteredTodos = TodoAPI.filterTodos(todos, true, 'second');
+      expect(filteredTodos[0].id).toBe(2);
+    });
+
+    it('should return all todos if search is empty', function() {
+      var filteredTodos = TodoAPI.filterTodos(todos, true, '');
+      expect(filteredTodos.length).toBe(3);
     });
   });
 });
