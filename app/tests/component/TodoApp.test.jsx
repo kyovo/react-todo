@@ -6,6 +6,14 @@ var $ = require('jquery');
 
 var TodoApp = require('TodoApp');
 
+var todoData = {
+  id: 1,
+  text: 'test features',
+  completed: false,
+  createdAt: 0,
+  completedAt: undefined
+};
+
 describe('TodoApp', function() {
   it('should exist', function() {
     expect(TodoApp).toExist();
@@ -19,21 +27,29 @@ describe('TodoApp', function() {
     todoApp.handleAddTodo(todoText);
 
     expect(todoApp.state.todos[0].text).toBe(todoText);
+    expect(todoApp.state.todos[0].createdAt).toBeA('number');
   });
 
   it('should toggle completed value when handleToggle called', function() {
-    var todoData = {
-      id: 11,
-      text: 'test features',
-      completed: false
-    };
     var todoApp = TestUtils.renderIntoDocument(<TodoApp/>);
     todoApp.setState({todos: [todoData]});
 
     expect(todoApp.state.todos[0].completed).toBe(false);
-    todoApp.handleToggle(11);
+    todoApp.handleToggle(1);
 
     expect(todoApp.state.todos[0].completed).toBe(true);
+    expect(todoApp.state.todos[0].completedAt).toBeA('number');
+  });
 
+  it('should remove completedAt when completed go false', function() {
+
+    var todoApp = TestUtils.renderIntoDocument(<TodoApp/>);
+    todoApp.setState({todos: [todoData]});
+
+    expect(todoApp.state.todos[0].completed).toBe(true);
+    todoApp.handleToggle(1);
+
+    expect(todoApp.state.todos[0].completed).toBe(false);
+    expect(todoApp.state.todos[0].completedAt).toNotExist();
   });
 });
